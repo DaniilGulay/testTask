@@ -1,0 +1,48 @@
+services:
+    app:
+        build:
+            context: docker/app
+        volumes:
+            - ./:/var/www/laravel.local
+            - ./docker/app/local.ini:/usr/local/etc/php/conf.d/local.ini
+        ports:
+            - '9000:9000'
+            - '3002:3002'
+        networks:
+            - app-network
+
+
+    nginx:
+        build:
+            context: ./docker/nginx
+        volumes:
+            - ./:/var/www/laravel.local
+            - ./docker/nginx/default.conf:/etc/nginx/nginx.conf
+            - ./docker/nginx/sites-available:/etc/nginx/sites-available
+            - ./docker/nginx/log:/var/log/nginx
+        ports:
+            - "80:80"
+        networks:
+            - app-network
+
+
+    mysql:
+        image: mysql:8
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: 1234
+            MYSQL_USER: laravel
+            MYSQL_PASSWORD: 1234
+            MYSQL_DATABASE: laravel_db
+        volumes:
+            - db_data:/var/lib/mysql
+        networks:
+            - app-network
+
+volumes:
+    db_data:
+
+networks:
+    app-network:
+        driver: bridge
