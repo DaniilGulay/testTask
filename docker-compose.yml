@@ -3,7 +3,7 @@ services:
         build:
             context: docker/app
         volumes:
-            - ./:/var/www/laravel.local
+            - ./:/var/www/laravelProjeck.local
             - ./docker/app/local.ini:/usr/local/etc/php/conf.d/local.ini
         ports:
             - '9000:9000'
@@ -16,7 +16,7 @@ services:
         build:
             context: ./docker/nginx
         volumes:
-            - ./:/var/www/laravel.local
+            - ./:/var/www/laravelProjeck.local
             - ./docker/nginx/default.conf:/etc/nginx/nginx.conf
             - ./docker/nginx/sites-available:/etc/nginx/sites-available
             - ./docker/nginx/log:/var/log/nginx

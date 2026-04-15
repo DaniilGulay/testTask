@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\TaskController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::apiResource('tasks', TaskController::class);
+Route::post('registration', [AuthController::class, 'registration']);
+Route::apiResource('profile', ProfileController::class);
